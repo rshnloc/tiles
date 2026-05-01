@@ -1,0 +1,23 @@
+# Secrets — NEVER commit these
+.env
+frontend/.env.local
+frontend/.env.production.local
+
+# Build artifacts
+frontend/.next/
+frontend/node_modules/
+frontend/out/
+cpanel-deploy.zip
+
+# SSL certs (managed on server by Certbot)
+nginx/ssl/
+nginx/default.conf.bak
+
+# Docker volumes (server-side only)
+mysql_data/
+backend_storage/
+
+# OS / IDE
+.DS_Store
+.idea/
+*.swp

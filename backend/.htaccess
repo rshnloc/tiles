@@ -1,0 +1,34 @@
+# ============================================================
+# Backend .htaccess — for cPanel / Apache
+# Subdomain: api.insurance.careerxera.com
+# ============================================================
+
+Options -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+
+# Block direct access to sensitive files
+RewriteRule ^\.env           - [F,L]
+RewriteRule ^config/         - [F,L]
+RewriteRule ^middleware/     - [F,L]
+
+# Route everything to index.php (skip real files/dirs)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# PHP settings (adjust to your Hostinger PHP version)
+<IfModule mod_php8.c>
+    php_value upload_max_filesize 20M
+    php_value post_max_size 20M
+    php_value max_execution_time 60
+    php_value memory_limit 256M
+</IfModule>

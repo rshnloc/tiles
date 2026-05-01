@@ -1,0 +1,8 @@
+Options -Indexes
+RewriteEngine On
+
+# Let Apache/PHP handle /api/* directly — do NOT pass to Node.js
+RewriteCond %{REQUEST_URI} ^/api(/|$)
+RewriteRule ^ - [L]
+
+# Everything else → Next.js (Passenger handles this automatically)
