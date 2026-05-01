@@ -3,14 +3,19 @@
 // CORS Configuration
 // ============================================================
 
-$allowedOrigins = [
+$allowedOrigins = array_filter([
     'https://insurance.careerxera.com',
-    'http://localhost:3000',   // local dev
+    getenv('FRONTEND_URL') ?: null,
+    'http://localhost:3000',
     'http://localhost',
-];
+]);
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if (in_array($origin, $allowedOrigins, true)) {
+
+// Also allow any *.vercel.app subdomain
+$isVercel = preg_match('/^https:\/\/[a-z0-9\-]+\.vercel\.app$/', $origin);
+
+if (in_array($origin, $allowedOrigins, true) || $isVercel) {
     header('Access-Control-Allow-Origin: ' . $origin);
 } else {
     header('Access-Control-Allow-Origin: https://insurance.careerxera.com');
