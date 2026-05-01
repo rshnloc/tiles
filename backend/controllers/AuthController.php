@@ -27,11 +27,8 @@ class AuthController {
         $stmt->execute([$userId, $phone, $otp, $expiresAt, $otp, $expiresAt]);
 
         // TODO: Integrate SMS provider (e.g., MSG91, Twilio)
-        // In dev mode, return OTP in response
-        $data = ['otp_sent' => true];
-        if (getenv('APP_ENV') === 'development') {
-            $data['debug_otp'] = $otp;
-        }
+        // Return OTP in response until SMS is configured
+        $data = ['otp_sent' => true, 'debug_otp' => $otp];
 
         respond(true, $data, 'OTP sent successfully');
     }

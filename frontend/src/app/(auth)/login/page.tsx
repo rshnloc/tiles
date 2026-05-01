@@ -27,8 +27,12 @@ export default function LoginPage() {
     }
     setLoading(true);
     try {
-      await authApi.sendOtp(phone);
-      toast.success('OTP sent successfully!');
+      const res: any = await authApi.sendOtp(phone);
+      if (res?.data?.debug_otp) {
+        toast.success(`OTP: ${res.data.debug_otp}`, { duration: 30000 });
+      } else {
+        toast.success('OTP sent successfully!');
+      }
       setStep('otp');
       startResendTimer();
     } catch {
